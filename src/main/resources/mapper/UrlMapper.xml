@@ -1,0 +1,30 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yyh.spider.mapper.UrlMapper">
+    <resultMap id="UrlMapperMap" type="com.yyh.entity.Url">
+        <id column="url_id" property="urlId" jdbcType="VARCHAR"/>
+        <id column="url" property="url" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--添加数据-->
+    <insert id="insertUrl" parameterType="com.yyh.entity.Url">
+        insert into urls(url_id, url)
+        values (#{urlId}, #{url})
+    </insert>
+
+    <!--通过urlId查看是否存在-->
+    <select id="selectByUrl" parameterType="java.lang.String" resultType="java.lang.String">
+        select url_id from urls where url = #{url}
+    </select>
+
+    <!--修改status字段-->
+    <update id="updateStatus" parameterType="java.lang.String">
+        update urls set status = 1 where url_id = #{urlId}
+    </update>
+
+    <!--取出一定数量的urls-->
+    <select id="selectUrls" resultType="java.lang.String">
+        select url from urls where status = 0 limit 2000
+    </select>
+</mapper>
